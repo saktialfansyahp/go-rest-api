@@ -1,6 +1,8 @@
 package router
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/saktialfansyahp/go-rest-api/controllers/authcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/productcontroller"
@@ -16,6 +18,9 @@ func DefineRoutes() {
 	r := gin.Default()
 	models.ConnectDatabase()
 
+	r.GET("home", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, "Home")
+	})
 	r.POST("login", func(ctx *gin.Context) {
 		authcontroller.Login(ctx.Writer, ctx.Request)
 	})
@@ -32,7 +37,6 @@ func DefineRoutes() {
 			productcontroller.Index(ctx.Writer, ctx.Request)
 		})
 	}
-	// r.GET("api/products", productcontrollers.Index)
 
-	// r.Run()
+	r.Run()
 }
