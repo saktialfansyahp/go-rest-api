@@ -1,9 +1,0 @@
-{
-  "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/vercel(.*)",
-      "destination": "/vercel/vercel.go"
-    }
-  ]
-}
