@@ -1,12 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"net/http"
-
-	"github.com/saktialfansyahp/go-rest-api/router"
-)
-
 // func main() {
 // 	models.ConnectDatabase()
 // 	r := mux.NewRouter()
@@ -21,11 +14,11 @@ import (
 // 	log.Fatal(http.ListenAndServe(":8080", r))
 // }
 
-func main(){
-	router.DefineRoutes()
-	serverAddr := ":8080"
-	fmt.Printf("Server is listening on %s\n", serverAddr)
-	go http.ListenAndServe(serverAddr, nil)
+// func main(){
+// 	router.DefineRoutes()
+// 	serverAddr := ":8080"
+// 	fmt.Printf("Server is listening on %s\n", serverAddr)
+// 	go http.ListenAndServe(serverAddr, nil)
 
-	select {}
-}
+// 	select {}
+// }

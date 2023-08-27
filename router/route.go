@@ -12,8 +12,8 @@ import (
 // 	api.HandleFunc("/product", productcontroller.Index).Methods("GET")
 // 	api.Use(middleware.JWTMiddleware)
 
-func DefineRoutes() {
-	r := gin.Default()
+func DefineRoutes(r *gin.RouterGroup) {
+	// r := gin.Default()
 	models.ConnectDatabase()
 
 	r.POST("login", func(ctx *gin.Context) {
@@ -34,5 +34,5 @@ func DefineRoutes() {
 	}
 	// r.GET("api/products", productcontrollers.Index)
 
-	r.Run()
+	// r.Run()
 }
