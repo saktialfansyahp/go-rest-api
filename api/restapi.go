@@ -14,22 +14,22 @@ var(
 )
 
 func myRoute(r *gin.RouterGroup) {
-	r.GET("home", func(ctx *gin.Context) {
+	r.GET("/home", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "Home")
 	})
-	r.POST("login", func(ctx *gin.Context) {
+	r.POST("/login", func(ctx *gin.Context) {
 		authcontroller.Login(ctx.Writer, ctx.Request)
 	})
-	r.POST("register", func(ctx *gin.Context) {
+	r.POST("/register", func(ctx *gin.Context) {
 		authcontroller.Register(ctx.Writer, ctx.Request)
 	})
-	r.GET("logout", func(ctx *gin.Context) {
+	r.GET("/logout", func(ctx *gin.Context) {
 		authcontroller.Logout(ctx.Writer, ctx.Request)
 	})
-	api := r.Group("api")
+	api := r.Group("/api")
 	{
 		api.Use(middleware.GINMiddleware())
-		api.GET("product", func(ctx *gin.Context) {
+		api.GET("/product", func(ctx *gin.Context) {
 			productcontroller.Index(ctx.Writer, ctx.Request)
 		})
 	}
