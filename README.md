@@ -32,7 +32,7 @@ Selamat datang di Proyek Nama Proyek Anda! Proyek ini berisi implementasi backen
 4. GET /logout: Rute untuk melakukan logout pengguna.
 5. POST /role: Rute untuk membuat peran baru.
 
-Kemudian, Grup rute api untuk melindungi beberapa rute dengan middleware:
+   Kemudian, Grup rute api untuk melindungi beberapa rute dengan middleware:
 
 6. GET /api/admin/product: Rute yang hanya dapat diakses oleh pengguna dengan peran "admin". Di sini Anda menggunakan middleware untuk memverifikasi peran pengguna.
 7. GET /api/user/productUser: Rute yang dapat diakses oleh pengguna dengan peran "admin" dan "user". Juga menggunakan middleware untuk verifikasi peran.
