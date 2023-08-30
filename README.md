@@ -15,7 +15,7 @@ Selamat datang di Proyek Nama Proyek Anda! Proyek ini berisi implementasi backen
 
    ```
 
-   Setelah dependensi terinstal, jalankan perintah berikut untuk memulai server:
+5. Setelah dependensi terinstal, jalankan perintah berikut untuk memulai server:
 
    ```sh
 
