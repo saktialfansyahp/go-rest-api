@@ -1,6 +1,6 @@
 # Go Rest Api
 
-Selamat datang di Proyek Nama Proyek Anda! Proyek ini berisi implementasi backend untuk layanan Anda. Di bawah ini, Anda akan menemukan informasi tentang cara menjalankan proyek, endpoint yang tersedia, dan bagaimana cara menggunakannya.
+Selamat datang di Proyek Go Rest Api! Proyek ini berisi implementasi backend untuk layanan Anda. Di bawah ini, Anda akan menemukan informasi tentang cara menjalankan proyek, endpoint yang tersedia, dan bagaimana cara menggunakannya.
 
 ## Menjalankan Proyek
 
