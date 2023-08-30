@@ -10,17 +10,19 @@ Selamat datang di Proyek Nama Proyek Anda! Proyek ini berisi implementasi backen
 4. Jalankan perintah berikut untuk menginstal dependensi:
 
    ```sh
+
    go mod download
+
    ```
 
-Setelah dependensi terinstal, jalankan perintah berikut untuk memulai server:
+   Setelah dependensi terinstal, jalankan perintah berikut untuk memulai server:
 
-    ```sh
+   ```sh
 
-    go run main.go
-    Server akan berjalan pada alamat http://localhost:8080.
+   go run main.go
+   Server akan berjalan pada alamat http://localhost:8080.
 
-    ```
+   ```
 
 # Endpoint
 
