@@ -26,16 +26,13 @@ Selamat datang di Proyek Nama Proyek Anda! Proyek ini berisi implementasi backen
 
 # Endpoint
 
-GET /home: Rute untuk halaman beranda.
-POST /login: Rute untuk melakukan login pengguna.
-POST /register: Rute untuk mendaftarkan pengguna baru.
-GET /logout: Rute untuk melakukan logout pengguna.
-POST /role: Rute untuk membuat peran baru.
-Kemudian, Anda menggunakan grup rute api untuk melindungi beberapa rute dengan middleware:
+1. GET /home: Rute untuk halaman beranda.
+2. POST /login: Rute untuk melakukan login pengguna.
+3. POST /register: Rute untuk mendaftarkan pengguna baru.
+4. GET /logout: Rute untuk melakukan logout pengguna.
+5. POST /role: Rute untuk membuat peran baru.
 
-GET /api/admin/product: Rute yang hanya dapat diakses oleh pengguna dengan peran "admin". Di sini Anda menggunakan middleware untuk memverifikasi peran pengguna.
-GET /api/user/productUser: Rute yang dapat diakses oleh pengguna dengan peran "admin" dan "user". Juga menggunakan middleware untuk verifikasi peran.
+Kemudian, Grup rute api untuk melindungi beberapa rute dengan middleware:
 
-```
-
-```
+6. GET /api/admin/product: Rute yang hanya dapat diakses oleh pengguna dengan peran "admin". Di sini Anda menggunakan middleware untuk memverifikasi peran pengguna.
+7. GET /api/user/productUser: Rute yang dapat diakses oleh pengguna dengan peran "admin" dan "user". Juga menggunakan middleware untuk verifikasi peran.
