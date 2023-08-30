@@ -9,16 +9,18 @@ Selamat datang di Proyek Nama Proyek Anda! Proyek ini berisi implementasi backen
 3. Buka terminal dan navigasikan ke direktori repositori yang baru saja Anda klon.
 4. Jalankan perintah berikut untuk menginstal dependensi:
 
-   ````sh
+   ```sh
    go mod download
+   ```
 
-   Setelah dependensi terinstal, jalankan perintah berikut untuk memulai server:
+Setelah dependensi terinstal, jalankan perintah berikut untuk memulai server:
 
-   ```sh
-   go run main.go
-   ```sh
-   Server akan berjalan pada alamat http://localhost:8080.
-   ````
+    ```sh
+
+    go run main.go
+    Server akan berjalan pada alamat http://localhost:8080.
+
+    ```
 
 # Endpoint
 
@@ -31,3 +33,7 @@ Kemudian, Anda menggunakan grup rute api untuk melindungi beberapa rute dengan m
 
 GET /api/admin/product: Rute yang hanya dapat diakses oleh pengguna dengan peran "admin". Di sini Anda menggunakan middleware untuk memverifikasi peran pengguna.
 GET /api/user/productUser: Rute yang dapat diakses oleh pengguna dengan peran "admin" dan "user". Juga menggunakan middleware untuk verifikasi peran.
+
+```
+
+```
