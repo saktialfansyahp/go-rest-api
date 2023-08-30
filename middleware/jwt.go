@@ -56,7 +56,7 @@ func JWTMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-func GINMiddleware() gin.HandlerFunc {
+func GINMiddleware(requiredRoles ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		cookie, err := c.Cookie("token")
 		if err != nil {
@@ -93,6 +93,20 @@ func GINMiddleware() gin.HandlerFunc {
 
 		if !token.Valid {
 			c.JSON(http.StatusUnauthorized, gin.H{"Message": "Unauthorized"})
+			c.Abort()
+			return
+		}
+
+		authorized := false
+		for _, requiredRole := range requiredRoles {
+			if requiredRole == claims.Role {
+				authorized = true
+				break
+			}
+		}
+
+		if !authorized {
+			c.JSON(http.StatusForbidden, gin.H{"Message": "Forbidden"})
 			c.Abort()
 			return
 		}

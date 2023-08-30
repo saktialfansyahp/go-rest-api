@@ -10,6 +10,7 @@ var JWT_KEY = []byte("KtrYPBh3sNfdEm4UhrnLWz8qCCxcq0Pm1G2D4spgWUaWSxzTrVqXcUpIVv
 
 type JWTClaim struct {
 	Username string
+	Role string
 	jwt.RegisteredClaims
 }
 func GenerateToken(name string) (string, error) {
