@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/saktialfansyahp/go-rest-api/config"
 	"github.com/saktialfansyahp/go-rest-api/helper"
@@ -13,42 +14,37 @@ import (
 	"gorm.io/gorm"
 )
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func Login(c *gin.Context) {
 	var userInput models.AuthRequest
-	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&userInput); err != nil {
-		response := map[string]string{"message": err.Error()}
-		helper.ResponseJSON(w, http.StatusBadRequest, response)
+
+	if err := c.ShouldBindJSON(&userInput); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
-	defer r.Body.Close()
 
 	var user models.User
 	if err := models.DB.Where("username = ?", userInput.Username).Preload("Role").First(&user).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
-			response := map[string]string{"message": "username atau password salah"}
-			helper.ResponseJSON(w, http.StatusUnauthorized, response)
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "username atau password salah"})
 			return
 		default:
-			response := map[string]string{"message": err.Error()}
-			helper.ResponseJSON(w, http.StatusInternalServerError, response)
+			c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			return
 		}
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userInput.Password)); err != nil {
-		response := map[string]string{"message": "username atau password salah"}
-		helper.ResponseJSON(w, http.StatusUnauthorized, response)
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "username atau password salah"})
 		return
 	}
 
 	expTime := time.Now().Add(time.Minute * 30)
 	claims := &config.JWTClaim{
-		Username: user.Username,
-		Role: user.Role.Name,
+		Username:         user.Username,
+		Role:             user.Role.Name,
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer: "go-jwt",
+			Issuer:    "go-jwt",
 			ExpiresAt: jwt.NewNumericDate(expTime),
 		},
 	}
@@ -57,21 +53,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	token, err := tokenAlgo.SignedString(config.JWT_KEY)
 	if err != nil {
-		response := map[string]string{"message": err.Error()}
-		helper.ResponseJSON(w, http.StatusInternalServerError, response)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 
-	// http.SetCookie(w, &http.Cookie{
-	// 	Name: "token",
-	// 	Path: "/",
-	// 	Value: token,
-	// 	HttpOnly: true,
-	// })
-	
-	response := map[string]interface{}{"message": "login success", "data": user, "token": token}
-	helper.ResponseJSON(w, http.StatusOK, response)
-
+	c.JSON(http.StatusOK, gin.H{"message": "login success", "data": user, "token": token})
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {

@@ -25,9 +25,7 @@ func registerRouter(r *gin.RouterGroup) {
 	r.GET("home", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "Home")
 	})
-	r.POST("/login", func(ctx *gin.Context) {
-		authcontroller.Login(ctx.Writer, ctx.Request)
-	})
+	r.POST("/login", authcontroller.Login)
 	r.POST("register", func(ctx *gin.Context) {
 		authcontroller.Register(ctx.Writer, ctx.Request)
 	})
