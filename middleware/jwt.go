@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -58,18 +59,35 @@ func JWTMiddleware(next http.Handler) http.Handler {
 
 func GINMiddleware(requiredRoles ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Cookie("token")
-		if err != nil {
-			if err == http.ErrNoCookie {
-				c.JSON(http.StatusUnauthorized, gin.H{"Message": "Unauthorized"})
-				c.Abort()
-				return
-			}
-		}
+		// cookie, err := c.Cookie("token")
+		// if err != nil {
+		// 	if err == http.ErrNoCookie {
+		// 		c.JSON(http.StatusUnauthorized, gin.H{"Message": "Unauthorized"})
+		// 		c.Abort()
+		// 		return
+		// 	}
+		// }
+		authHeader := c.GetHeader("Authorization")
+        if authHeader == "" {
+            c.JSON(http.StatusUnauthorized, gin.H{"Message": "Unauthorized"})
+            c.Abort()
+            return
+        }
+
+        // Split header value to extract the token
+        tokenParts := strings.Split(authHeader, " ")
+        if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
+            c.JSON(http.StatusUnauthorized, gin.H{"Message": "Unauthorized"})
+            c.Abort()
+            return
+        }
+
+        // Extract and validate the token
+        tokenString := tokenParts[1]
 		
 		claims := &config.JWTClaim{}
 
-		token, err := jwt.ParseWithClaims(cookie, claims, func(t *jwt.Token) (interface{}, error) {
+		token, err := jwt.ParseWithClaims(tokenString, claims, func(t *jwt.Token) (interface{}, error) {
 			return config.JWT_KEY, nil
 		})
 

@@ -62,14 +62,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name: "token",
-		Path: "/",
-		Value: token,
-		HttpOnly: true,
-	})
+	// http.SetCookie(w, &http.Cookie{
+	// 	Name: "token",
+	// 	Path: "/",
+	// 	Value: token,
+	// 	HttpOnly: true,
+	// })
 	
-	response := map[string]interface{}{"message": "login success", "data": user}
+	response := map[string]interface{}{"message": "login success", "data": user, "token": token}
 	helper.ResponseJSON(w, http.StatusOK, response)
 
 }

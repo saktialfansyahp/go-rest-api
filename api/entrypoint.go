@@ -1,7 +1,9 @@
-package router
+package api
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/saktialfansyahp/go-rest-api/controllers/authcontroller"
@@ -9,31 +11,20 @@ import (
 	"github.com/saktialfansyahp/go-rest-api/controllers/colorcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/productcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/subcategorycontroller"
+	"github.com/saktialfansyahp/go-rest-api/handler"
 	"github.com/saktialfansyahp/go-rest-api/middleware"
 	"github.com/saktialfansyahp/go-rest-api/models"
 )
 
-// 	api := r.PathPrefix("api").Subrouter()
-// 	api.HandleFunc("/product", productcontroller.Index).Methods("GET")
-// 	api.Use(middleware.JWTMiddleware)
+var (
+	app *gin.Engine
+)
 
-func DefineRoutes() {
-	r := gin.Default()
+func registerRouter(r *gin.RouterGroup) {
+
 	models.ConnectDatabase()
-
-	r.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Authorization, Content-Type")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-
-		if c.Request.Method == "OPTIONS"{
-			c.JSON(http.StatusOK, gin.H{"message": "Preflight request successful"})
-			c.Abort()
-			return
-		}
-		c.Next()
-	})
-
+	
+	r.GET("/api/ping", handler.Ping)
 	r.GET("home", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "Home")
 	})
@@ -92,6 +83,29 @@ func DefineRoutes() {
 			productcontroller.User(ctx.Writer, ctx.Request)
 		})
 	}
+}
 
-	r.Run()
+// init gin app
+func init() {
+	app = gin.New()
+
+	// Handling routing errors
+	app.NoRoute(func(c *gin.Context) {
+		sb := &strings.Builder{}
+		sb.WriteString("routing err: no route, try this:\n")
+		for _, v := range app.Routes() {
+			sb.WriteString(fmt.Sprintf("%s %s\n", v.Method, v.Path))
+		}
+		c.String(http.StatusBadRequest, sb.String())
+	})
+
+	r := app.Group("/")
+
+	// register route
+	registerRouter(r)
+}
+
+// entrypoint
+func Handler(w http.ResponseWriter, r *http.Request) {
+	app.ServeHTTP(w, r)
 }
