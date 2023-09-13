@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/saktialfansyahp/go-rest-api/controllers/authcontroller"
+	"github.com/saktialfansyahp/go-rest-api/controllers/cartcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/categorycontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/colorcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/productcontroller"
@@ -26,6 +27,7 @@ func registerRouter(r *gin.RouterGroup) {
 		ctx.String(http.StatusOK, "Home")
 	})
 	r.POST("/api/login", authcontroller.Login)
+	r.POST("/api/cart", cartcontroller.Index)
 	r.POST("register", func(ctx *gin.Context) {
 		authcontroller.Register(ctx.Writer, ctx.Request)
 	})
