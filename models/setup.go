@@ -20,5 +20,12 @@ func ConnectDatabase(){
 
 	db.AutoMigrate(&User{}, &Role{}, &Product{}, &Category{}, &Subcategory{}, &Color{}, &Product_Color{})
 
+	sqlDB, err := db.DB()
+    if err != nil {
+        log.Fatal(err)
+    }
+	
+    sqlDB.Close()
+
     DB = db
 }
