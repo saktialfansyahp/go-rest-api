@@ -40,9 +40,9 @@ func DefineRoutes() {
 	// r.POST("/login", func(ctx *gin.Context) {
 	// 	authcontroller.Login(ctx.Writer, ctx.Request)
 	// })
-	r.POST("register", func(ctx *gin.Context) {
-		authcontroller.Register(ctx.Writer, ctx.Request)
-	})
+	// r.POST("register", func(ctx *gin.Context) {
+	// 	authcontroller.Register(ctx.Writer, ctx.Request)
+	// })
 	r.GET("logout", func(ctx *gin.Context) {
 		authcontroller.Logout(ctx.Writer, ctx.Request)
 	})

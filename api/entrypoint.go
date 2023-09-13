@@ -30,10 +30,8 @@ func registerRouter(r *gin.RouterGroup) {
 		ctx.String(http.StatusOK, "Home")
 	})
 	r.POST("/api/login", authcontroller.Login)
+	r.POST("/api/register", authcontroller.Register)
 	r.POST("/api/cart", cartcontroller.Index)
-	r.POST("register", func(ctx *gin.Context) {
-		authcontroller.Register(ctx.Writer, ctx.Request)
-	})
 	r.GET("logout", func(ctx *gin.Context) {
 		authcontroller.Logout(ctx.Writer, ctx.Request)
 	})
