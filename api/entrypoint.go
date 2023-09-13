@@ -31,12 +31,10 @@ func registerRouter(r *gin.RouterGroup) {
 	})
 	r.POST("/api/login", authcontroller.Login)
 	r.POST("/api/register", authcontroller.Register)
+	r.POST("/api/role", authcontroller.Role)
 	r.POST("/api/cart", cartcontroller.Index)
 	r.GET("logout", func(ctx *gin.Context) {
 		authcontroller.Logout(ctx.Writer, ctx.Request)
-	})
-	r.POST("role", func(ctx *gin.Context) {
-		authcontroller.Role(ctx.Writer, ctx.Request)
 	})
 	api := r.Group("api")
 	api.GET("product", func(ctx *gin.Context) {

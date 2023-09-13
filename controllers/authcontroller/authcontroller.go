@@ -1,7 +1,6 @@
 package authcontroller
 
 import (
-	"encoding/json"
 	"net/http"
 	"time"
 
@@ -144,23 +143,18 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	helper.ResponseJSON(w, http.StatusOK, response)
 }
 
-func Role(w http.ResponseWriter, r *http.Request) {
+func Role(c *gin.Context) {
 	var userInput models.Role
 
-	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&userInput); err != nil {
-		response := map[string]string{"message": err.Error()}
-		helper.ResponseJSON(w, http.StatusBadRequest, response)
-		return
-	}
-	defer r.Body.Close()
-
-	if  err := models.DB.Create(&userInput).Error; err != nil {
-		response := map[string]string{"message": err.Error()}
-		helper.ResponseJSON(w, http.StatusInternalServerError, response)
+	if err := c.ShouldBindJSON(&userInput); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
-	response := map[string]interface{}{"message": "success", "data": userInput}
-	helper.ResponseJSON(w, http.StatusOK, response)
+	if err := models.DB.Create(&userInput).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "data": userInput})
 }

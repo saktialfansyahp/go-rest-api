@@ -46,9 +46,9 @@ func DefineRoutes() {
 	r.GET("logout", func(ctx *gin.Context) {
 		authcontroller.Logout(ctx.Writer, ctx.Request)
 	})
-	r.POST("role", func(ctx *gin.Context) {
-		authcontroller.Role(ctx.Writer, ctx.Request)
-	})
+	// r.POST("role", func(ctx *gin.Context) {
+	// 	authcontroller.Role(ctx.Writer, ctx.Request)
+	// })
 	api := r.Group("api")
 	api.GET("product", func(ctx *gin.Context) {
 		productcontroller.Index(ctx.Writer, ctx.Request)
