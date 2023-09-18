@@ -14,7 +14,7 @@ import (
 	"github.com/saktialfansyahp/go-rest-api/controllers/subcategorycontroller"
 	"github.com/saktialfansyahp/go-rest-api/handler"
 	"github.com/saktialfansyahp/go-rest-api/middleware"
-	// "github.com/saktialfansyahp/go-rest-api/models"
+	"github.com/saktialfansyahp/go-rest-api/models"
 )
 
 var (
@@ -103,5 +103,6 @@ func init() {
 
 // entrypoint
 func Handler(w http.ResponseWriter, r *http.Request) {
+	models.ConnectDatabase()
 	app.ServeHTTP(w, r)
 }
