@@ -14,7 +14,7 @@ import (
 	"github.com/saktialfansyahp/go-rest-api/controllers/subcategorycontroller"
 	"github.com/saktialfansyahp/go-rest-api/handler"
 	"github.com/saktialfansyahp/go-rest-api/middleware"
-	"github.com/saktialfansyahp/go-rest-api/models"
+	// "github.com/saktialfansyahp/go-rest-api/models"
 )
 
 var (
@@ -24,6 +24,7 @@ var (
 func registerRouter(r *gin.RouterGroup) {
 
 	// models.ConnectDatabase()
+	
 
 	r.GET("/api/ping", handler.Ping)
 	r.GET("home", func(ctx *gin.Context) {
@@ -99,7 +100,6 @@ func init() {
 
 	// register route
 	registerRouter(r)
-	models.ConnectDatabase()
 }
 
 // entrypoint
