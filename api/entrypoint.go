@@ -99,10 +99,10 @@ func init() {
 
 	// register route
 	registerRouter(r)
+	models.ConnectDatabase()
 }
 
 // entrypoint
 func Handler(w http.ResponseWriter, r *http.Request) {
-	models.ConnectDatabase()
 	app.ServeHTTP(w, r)
 }
