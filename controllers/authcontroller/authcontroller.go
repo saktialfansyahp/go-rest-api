@@ -152,7 +152,7 @@ func Role(c *gin.Context) {
 	}
 
 	if err := models.DB.Create(&userInput).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error(), "data": "Gagal Create"})
 		return
 	}
 
