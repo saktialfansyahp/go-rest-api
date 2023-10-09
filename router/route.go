@@ -42,9 +42,7 @@ func DefineRoutes() {
 	r.POST("/role", authcontroller.Role)
 	r.GET("/logout", authcontroller.Logout)
 	api := r.Group("api")
-	api.GET("product", func(ctx *gin.Context) {
-		productcontroller.Index(ctx.Writer, ctx.Request)
-	})
+	api.GET("product", productcontroller.Index)
 	{
 		admin := api.Group("admin")
 		admin.Use(middleware.GINMiddleware("admin"))
