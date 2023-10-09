@@ -40,9 +40,7 @@ func DefineRoutes() {
 	r.POST("/login", authcontroller.Login)
 	r.POST("/register", authcontroller.Register)
 	r.POST("/role", authcontroller.Role)
-	r.GET("logout", func(ctx *gin.Context) {
-		authcontroller.Logout(ctx.Writer, ctx.Request)
-	})
+	r.GET("/logout", authcontroller.Logout)
 	api := r.Group("api")
 	api.GET("product", func(ctx *gin.Context) {
 		productcontroller.Index(ctx.Writer, ctx.Request)

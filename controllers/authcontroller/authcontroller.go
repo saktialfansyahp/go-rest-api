@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/saktialfansyahp/go-rest-api/config"
-	"github.com/saktialfansyahp/go-rest-api/helper"
 	"github.com/saktialfansyahp/go-rest-api/models"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -131,16 +130,8 @@ func Register(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "success", "data": user})
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
-	http.SetCookie(w, &http.Cookie{
-		Name: "token",
-		Path: "/",
-		Value: "",
-		HttpOnly: true,
-	})
-
-	response := map[string]string{"message": "logout success"}
-	helper.ResponseJSON(w, http.StatusOK, response)
+func Logout(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
 func Role(c *gin.Context) {
