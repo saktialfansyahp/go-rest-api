@@ -17,9 +17,7 @@ var (
 func router(r *gin.RouterGroup) {
 	models.ConnectDatabase()
 
-	r.GET("api/barang", func(ctx *gin.Context) {
-		productcontroller.Index(ctx.Writer, ctx.Request)
-	})
+	r.GET("api/product", productcontroller.Index)
 }
 
 func init(){

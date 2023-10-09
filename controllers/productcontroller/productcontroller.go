@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/saktialfansyahp/go-rest-api/helper"
 	"github.com/saktialfansyahp/go-rest-api/models"
 )
@@ -19,16 +20,14 @@ func User(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func Index(w http.ResponseWriter, r *http.Request){
+func Index(c *gin.Context){
 	var product []models.Product_Color
 	if err := models.DB.Preload("Product").Preload("Product.Subcategory").Preload("Product.Subcategory.Category").
 	Preload("Color").Find(&product).Error; err != nil {
-		response := map[string]string{"message": err.Error()}
-		helper.ResponseJSON(w, http.StatusNotFound, response)
+        c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})
 		return
 	}
-	// response := map[string]interface{}{"message":"success", "data": product}
-	helper.ResponseJSON(w, http.StatusOK, product)
+    c.JSON(http.StatusOK, &product)
 }
 func ById(w http.ResponseWriter, r *http.Request, id string){
 	var product models.Product_Color
