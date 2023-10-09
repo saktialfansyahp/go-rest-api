@@ -7,13 +7,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/saktialfansyahp/go-rest-api/controllers/authcontroller"
-	"github.com/saktialfansyahp/go-rest-api/controllers/cartcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/categorycontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/colorcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/productcontroller"
 	"github.com/saktialfansyahp/go-rest-api/controllers/subcategorycontroller"
-	"github.com/saktialfansyahp/go-rest-api/handler"
 	"github.com/saktialfansyahp/go-rest-api/middleware"
+	"github.com/saktialfansyahp/go-rest-api/models"
 	// "github.com/saktialfansyahp/go-rest-api/models"
 )
 
@@ -23,17 +22,14 @@ var (
 
 func registerRouter(r *gin.RouterGroup) {
 
-	// models.ConnectDatabase()
-	
+	models.ConnectDatabase()
 
-	r.GET("/api/ping", handler.Ping)
 	r.GET("home", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "Home")
 	})
-	r.POST("/api/login", authcontroller.Login)
-	r.POST("/api/register", authcontroller.Register)
-	r.POST("/api/role", authcontroller.Role)
-	r.POST("/api/cart", cartcontroller.Index)
+	r.POST("/login", authcontroller.Login)
+	r.POST("/register", authcontroller.Register)
+	r.POST("/role", authcontroller.Role)
 	r.GET("logout", func(ctx *gin.Context) {
 		authcontroller.Logout(ctx.Writer, ctx.Request)
 	})
@@ -94,6 +90,19 @@ func init() {
 			sb.WriteString(fmt.Sprintf("%s %s\n", v.Method, v.Path))
 		}
 		c.String(http.StatusBadRequest, sb.String())
+	})
+
+	app.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Authorization, Content-Type")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+
+		if c.Request.Method == "OPTIONS"{
+			c.JSON(http.StatusOK, gin.H{"message": "Preflight request successful"})
+			c.Abort()
+			return
+		}
+		c.Next()
 	})
 
 	r := app.Group("/")

@@ -2,7 +2,7 @@ package models
 
 type ProductInput struct {
 	Id            int64  `gorm:"primaryKey" json:"id"`
-	Image         string `gorm:"type:longtext;not null" json:"image"`
+	Image         string `gorm:"type:text;not null" json:"image"`
 	ProductName   string `gorm:"type:varchar(255);not null" json:"product_name"`
 	Description   string `gorm:"type:text;not null" json:"description"`
 	Price         int64  `gorm:"type:int;not null" json:"price"`
@@ -12,7 +12,7 @@ type ProductInput struct {
 
 type Product struct {
 	Id            int64       `gorm:"primaryKey" json:"id"`
-	Image         string      `gorm:"type:longtext;not null" json:"image"`
+	Image         string      `gorm:"type:text;not null" json:"image"`
 	ProductName   string      `gorm:"type:varchar(255);not null" json:"product_name"`
 	Description   string      `gorm:"type:text;not null" json:"description"`
 	Price         int64       `gorm:"type:int;not null" json:"price"`
