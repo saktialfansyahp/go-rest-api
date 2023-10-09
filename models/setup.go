@@ -16,7 +16,7 @@ func ConnectDatabase(){
         panic("failed to connect database")
     }
 
-	db.AutoMigrate(&User{}, &Role{}, &Product{}, &Category{}, &Subcategory{}, &Color{}, &Product_Color{})
+	// db.AutoMigrate(&User{}, &Role{}, &Product{}, &Category{}, &Subcategory{}, &Color{}, &Product_Color{})
 
     DB = db
 }
