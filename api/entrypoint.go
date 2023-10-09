@@ -24,7 +24,7 @@ func registerRouter(r *gin.RouterGroup) {
 
 	models.ConnectDatabase()
 
-	r.GET("home", func(ctx *gin.Context) {
+	r.GET("/home", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "Home")
 	})
 	r.POST("/login", authcontroller.Login)
@@ -94,14 +94,25 @@ func init() {
 
 	app.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Authorization, Content-Type")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
-		if c.Request.Method == "OPTIONS"{
+		if c.Request.Method == "OPTIONS" {
+			c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS")
 			c.JSON(http.StatusOK, gin.H{"message": "Preflight request successful"})
 			c.Abort()
 			return
 		}
+
+		if c.Request.Method == "POST" {
+			c.Writer.Header().Set("Access-Control-Allow-Methods", "POST")
+		} else if c.Request.Method == "GET" {
+			c.Writer.Header().Set("Access-Control-Allow-Methods", "GET")
+		} else if c.Request.Method == "PUT" {
+			c.Writer.Header().Set("Access-Control-Allow-Methods", "PUT")
+		} else if c.Request.Method == "DELETE" {
+			c.Writer.Header().Set("Access-Control-Allow-Methods", "DELETE")
+		}
+
 		c.Next()
 	})
 
